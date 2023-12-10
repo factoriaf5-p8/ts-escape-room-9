@@ -1,49 +1,41 @@
-<a href="https://totaltypescript.com/tutorials/beginners-typescript"><img src="https://res.cloudinary.com/total-typescript/image/upload/v1664461034/beginners-typescript-tutorial/github_2x_himnyi.png" alt="beginner typescript tutorial" /></a>
+# Typescript Labs
 
-## Quickstart
+## Lab 9: Typing Promises and Async Requests
 
-Take the course on [Total TypeScript](https://totaltypescript.com/tutorials/beginners-typescript). There, you'll find:
+file: `/src/09-promises.problem.ts`
 
-- Video explanations for each problem and solution
-- Transcripts
-- Text explanations
-- A built-in Stackblitz editor
+Here we have a function called `fetchLukeSkywalker`:
 
-```sh
-# Installs all dependencies
-npm install
+```ts
+export const fetchLukeSkywalker = async (): LukeSkywalker => {
+  const data = await fetch("<https://swapi.dev/api/people/1>").then((res) => {
+    return res.json();
+  });
 
-# Asks you which exercise you'd like to run, and runs it
-npm run exercise
+  return data;
+};
 ```
 
-## How to take the course
+It goes to the Star Wars API at swapi.dev and fetches people/1, which happens to correspond to Luke Skywalker.
 
-You'll notice that the course is split into exercises. Each exercise is split into a `*.problem` and a `*.solution`.
+There's a LukeSkywalker type that includes properties based on what the API includes in the response:
 
-To take an exercise:
+```ts
+interface LukeSkywalker {
+  name: string;
+  height: string;
+  mass: string;
+  hair_color: string;
+  skin_color: string;
+  eye_color: string;
+  birth_year: string;
+  gender: string;
+}
+```
 
-1. Run `npm run exercise`
-2. Choose which exercise you'd like to run.
+However, TypeScript is showing us an error on the return type:
 
-This course encourages **active, exploratory learning**. In the video, I'll explain a problem, and **you'll be asked to try to find a solution**. To attempt a solution, you'll need to:
+`Type 'LukeSkywalker' is not a valid async function return type in ES5/ES3 because it does not refer to a Promise-compatible constructor value.`
 
-1. Check out [TypeScript's docs](https://www.typescriptlang.org/docs/handbook/intro.html).
-1. Try to find something that looks relevant.
-1. Give it a go to see if it solves the problem.
-
-You'll know if you've succeeded because the tests will pass.
-
-**If you succeed**, or **if you get stuck**, unpause the video and check out the `*.solution`. You can see if your solution is better or worse than mine!
-
-## Acknowledgements
-
-Say thanks to Matt on [Twitter](https://twitter.com/mattpocockuk) or by joining his [Discord](https://discord.gg/8S5ujhfTB3). Consider signing up to his [Total TypeScript course](https://totaltypescript.com).
-
-## Reference
-
-### `npm run exercise`
-
-Alias: `npm run e`
-
-Open a prompt for choosing which exercise you'd like to run.
+Challenge
+Your challenge is to figure out how to update the return type annotations to make TypeScript happy.
